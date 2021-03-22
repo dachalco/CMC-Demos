@@ -7,10 +7,8 @@ class Euler:
         self.figure = plot.figure()
         self.axes = self.figure.gca()
 
-        # k(t) is some continuous/differentiable function.
+        # f(t) is some continuous/differentiable function.
         # Different curves result in different shape of euler spiral
-        # When k=0, the parametric representation yields the x-axis
-        # When k=1, it yields the circle (1 = x**2 + (y - 1)**2)
         self.f = lambda t: t**2
 
     def x(self, t, step=0.001):
