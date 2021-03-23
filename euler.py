@@ -11,8 +11,12 @@ class Euler:
         # f(t) is some continuous/differentiable function.
         # Different curves result in different shape of euler spiral
         # You must manually solve for these yourself
-        self.f = lambda t: t*np.cos(t)
-        self.f_prime = lambda t: np.cos(t) - t * np.sin(t)
+        self.fun_curves = [lambda t: 0.5 * t**2,
+                           lambda t: t * np.cos(t),
+                           lambda t: t * np.cos(t)**3,
+                           lambda t: t**2 * np.sin(t**3)
+                           ]
+        self.f = self.fun_curves[-1]
 
     def k(self, t):
         '''
@@ -44,7 +48,7 @@ class Euler:
 
         return aggregate
 
-    def draw(self, lower_bound=-10, upper_bound=10, step=0.01):
+    def draw(self, lower_bound=-10, upper_bound=10, step=0.001):
         t_range = np.arange(lower_bound, upper_bound, step).tolist()
 
         for t in t_range:
