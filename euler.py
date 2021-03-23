@@ -11,8 +11,8 @@ class Euler:
         # f(t) is some continuous/differentiable function.
         # Different curves result in different shape of euler spiral
         # You must manually solve for these yourself
-        self.f = lambda t: 0.5*t**2
-        self.f_prime = lambda t: t
+        self.f = lambda t: t*np.cos(t)
+        self.f_prime = lambda t: np.cos(t) - t * np.sin(t)
 
     def k(self, t):
         '''
@@ -61,7 +61,7 @@ class Euler:
         plot.show()
 
 
-    def drawFresnel(self, lower_bound=-10, upper_bound=10, step=0.01):
+    def drawFresnel(self, lower_bound=-100, upper_bound=100, step=0.01):
         t_range = np.arange(lower_bound, upper_bound, step)
         for t in t_range:
             (S, C) = fresnel(t)
@@ -75,7 +75,7 @@ def main():
     plot.rcParams['legend.fontsize'] = 10
 
     euler = Euler()
-    #euler.draw()
+    euler.draw()
     #euler.drawNegative()
     #euler.drawFresnel()
 
