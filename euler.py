@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plot
 import numpy as np
+from scipy.special import fresnel
 import scipy.integrate as integrate
 
 class Euler:
@@ -9,9 +10,18 @@ class Euler:
 
         # f(t) is some continuous/differentiable function.
         # Different curves result in different shape of euler spiral
-        self.f = lambda t: t**2
+        # You must manually solve for these yourself
+        self.f = lambda t: 0.5*t**2
+        self.f_prime = lambda t: t
 
-    def x(self, t, step=0.001):
+    def k(self, t):
+        '''
+        curvature
+        '''
+        return self.f_prime(t)
+
+
+    def x(self, t, step=0.01):
         '''
         x(t) = integral( cos(f(t) dt )
         Integral is approximated with rectangles
@@ -42,13 +52,22 @@ class Euler:
 
         plot.show()
 
-def test():
-    import numpy as np
-    from scipy.special import fresnel
-    import pylab
-    t = np.linspace(-10, 10, 100)
-    pylab.plot(*fresnel(t), c='k')
-    pylab.show()
+    def drawNegative(self, lower_bound=-10, upper_bound=10, step=0.01):
+        t_range = np.arange(lower_bound, upper_bound, step).tolist()
+
+        for t in t_range:
+            self.axes.plot(-self.x(t), -self.y(t), markersize=1, marker='o')
+
+        plot.show()
+
+
+    def drawFresnel(self, lower_bound=-10, upper_bound=10, step=0.01):
+        t_range = np.arange(lower_bound, upper_bound, step)
+        for t in t_range:
+            (S, C) = fresnel(t)
+            self.axes.plot(S, C, markersize=1, marker='x')
+
+        plot.show()
 
 def main():
     print("Starting...")
@@ -56,8 +75,10 @@ def main():
     plot.rcParams['legend.fontsize'] = 10
 
     euler = Euler()
-    euler.draw()
-    #test()
+    #euler.draw()
+    #euler.drawNegative()
+    #euler.drawFresnel()
+
     print("Done")
 
 if __name__ == '__main__':
